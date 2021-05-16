@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {Container, AppBar, Typography, Grow, Grid} from '@material-ui/core'; //Uses Material-UI, a React component library
 
-//Reux Functionality
+//Redux Functionality
 import {useDispatch} from 'react-redux'; //Imports useDispatch hook from Redux, allows us to dispatch an action
 import {getPosts} from './actions/posts'; //Imports actions
 

@@ -7,7 +7,7 @@ export default (posts = [], action) => {
         case 'FETCH_ALL':
             return action.payload; //posts that has been retrieved from backend (look at actions/posts.js)
         case 'CREATE':
-            return posts;
+            return [...posts, action.payload]; //spread the posts, and add a new post which is stored in the payload
         default:
             return posts;
     }
