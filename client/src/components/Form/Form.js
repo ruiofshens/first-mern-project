@@ -25,7 +25,7 @@ const Form = () => {
 
     //Dispatch the createPost action
     const handleSubmit = (e) => {
-        e.preventDefault(); //To not get refresh in the browser
+        e.preventDefault(); //To not get refresh event in the browser
         dispatch(createPost(postData));
     }
 

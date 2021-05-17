@@ -1,4 +1,5 @@
 import React from 'react';
+import { Grid, CircularProgress } from '@material-ui/core';
 import {useSelector} from 'react-redux'; //Allow retrieving of data from the global redux store
 
 //Import components required
@@ -13,11 +14,16 @@ const Posts = () => {
     console.log(posts);
     
     return (
-        <>
-            <h1>POSTS</h1>
-            <Post />
-            <Post />
-        </>
+        !posts.length ? <CircularProgress /> : (
+            <Grid className={classes.container} container alignItems="stretch" spacing={3}>
+                {/* For every Post component, create a respective Grid component */}
+                {posts.map((post) => (
+                    <Grid key={post.id} item xs={12} sm={6}>
+                        <Post post={post}/>
+                    </Grid> 
+                ))}
+            </Grid>
+        )
     );
 }
 
