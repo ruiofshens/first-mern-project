@@ -5,6 +5,8 @@
 import mongoose from 'mongoose';
 import PostMessage from '../models/postMessage.js';
 
+//res.json() is Express.js function that sends a JSON response
+
 export const getPosts = async (req, res) => {
     try {
         const postMessages = await PostMessage.find(); //Finding something in a model is async
@@ -39,7 +41,33 @@ export const updatePost = async(req, res) => {
     
     //If valid ID
     //Spread operator used to add the id to the post object
-    const updatedPost = await PostMessage.findByIdAndUpdate(_id, {...post, _id}, { new: true });
+    const updatedPost = await PostMessage.findByIdAndUpdate(_id, {...post, _id}, { new: true }); //Updating is async 
+
+    res.json(updatedPost);
+}
+
+export const deletePost = async (req, res) => {
+    const { id } = req.params;
+
+    //If invalid ID
+    if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No post with that id');
+
+    //If valid ID, delete post
+    await PostMessage.findByIdAndRemove(id); //Deleting is async 
+
+    res.json({ message: 'Post deleted successfully' });
+}
+
+export const likePost = async (req, res) => {
+    const { id } = req.params;
+
+    //If invalid ID
+    if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No post with that id');
+
+    //If valid ID, find the respective post
+    //Create the new updated post with like count incremented
+    const post = await PostMessage.findById(id); //Finding post is async 
+    const updatedPost = await PostMessage.findByIdAndUpdate(id, {likeCount: post.likeCount + 1}, {new : true}); //Liking post is async 
 
     res.json(updatedPost);
 }

@@ -1,9 +1,9 @@
 import * as api from '../api'; //Imports API calls used in the action creators
 
 //Action Creators are functions that return an action
+//Each creator uses redux-thunk as async data is used
 
 //Retrieve current posts
-//Use redux-thunk as async data is used
 export const getPosts = () => async (dispatch) => {
     try {
         const {data} = await api.fetchPosts(); //Retrieve data from the backend
@@ -14,7 +14,6 @@ export const getPosts = () => async (dispatch) => {
 }
 
 //Create a post
-//Use redux-thunk as async data is used
 export const createPost = (post) => async (dispatch) => {
     try {
         const {data} = await api.createPost(post);
@@ -24,12 +23,34 @@ export const createPost = (post) => async (dispatch) => {
     }
 }
 
+//Update current post details
 export const updatePost = (id, post) => async(dispatch) => {
     try {
         //Destructure the response to retrieve data only
         const { data } = await api.updatePost(id, post);
         dispatch({type: 'UPDATE', payload: data});
     } catch(error) {
+        console.log(error);
+    }
+}
+
+//Delete existing post
+export const deletePost = (id) => async(dispatch) => {
+    try {
+        await api.deletePost(id);
+        dispatch({ type: 'DELETE', payload: id });
+    } catch(error) {
+        console.log(error);
+    }
+}
+
+//Like existing post
+export const likePost = (id) => async(dispatch) => {
+    try {
+        //Destructure the response to retrieve data only
+        const { data } = await api.likePost(id);
+        dispatch({type: 'UPDATE', payload: data});
+    } catch (error) {
         console.log(error);
     }
 }
