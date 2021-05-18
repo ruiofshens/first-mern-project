@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {Container, AppBar, Typography, Grow, Grid} from '@material-ui/core'; //Uses Material-UI, a React component library
 
 //Redux Functionality
@@ -14,12 +14,14 @@ import memories from './images/memories.png';
 import useStyles from './styles';
 
 const App = () => {
+    const [currentId, setCurrentId] = useState(null);
     const classes = useStyles(); //Retrieves styling for App.js
     const dispatch = useDispatch();
 
+    //Change to current 
     useEffect(() => {
         dispatch(getPosts()); //getPosts action to be dispatched
-    },[dispatch]);
+    },[currentId, dispatch]);
 
     //Grow component: For animation, internally uses react-transition-group
     return (
@@ -32,10 +34,10 @@ const App = () => {
                 <Container>
                     <Grid container justify="space-between" alignItems="stretch" spacing={3}>
                         <Grid item xs={12} sm={7}>
-                            <Posts />
+                            <Posts setCurrentId={setCurrentId} />
                         </Grid>
                         <Grid item xs={12} sm={4}>
-                            <Form />
+                            <Form currentId={currentId} setCurrentId={setCurrentId}/>
                         </Grid>
                     </Grid>
                 </Container>

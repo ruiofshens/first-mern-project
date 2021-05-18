@@ -8,3 +8,5 @@ export const fetchPosts = () => axios.get(url);
 
 //Create post through sending POST request
 export const createPost = (newPost) => axios.post(url, newPost); 
+
+export const updatePost = (id, updatedPost) => axios.patch(`${url}/${id}`, updatedPost);
